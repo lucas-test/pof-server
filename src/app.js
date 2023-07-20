@@ -9,9 +9,10 @@ app.get('/', (req, res) => {
 
     let { title, max } = req.query; 
     console.log(title, max);
-    if (max === "undefined"){
+    if (max === undefined){
         max = "5";
     }
+    console.log(max);
 
     exec("./pop8query --title " + title + " --max " + max, (error, stdout, stderr) => {
         if (error) {
