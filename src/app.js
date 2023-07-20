@@ -7,10 +7,13 @@ const app = express();
 app.get('/', (req, res) => {
     console.log("Get a request");
 
-    const { title } = req.query; // put { title, attr2 } if other attributes
-    console.log(title);
+    let { title, max } = req.query; 
+    console.log(title, max);
+    if (max === "undefined"){
+        max = "5";
+    }
 
-    exec("./pop8query --title " + title + " output.csv", (error, stdout, stderr) => {
+    exec("./pop8query --title " + title + "--max " + max, (error, stdout, stderr) => {
         if (error) {
           console.error(`Error executing command: ${error.message}`);
           res.send();
