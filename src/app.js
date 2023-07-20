@@ -13,7 +13,7 @@ app.get('/', (req, res) => {
         max = "5";
     }
 
-    exec("./pop8query --title " + title + "--max " + max, (error, stdout, stderr) => {
+    exec("./pop8query --title " + title + " --max " + max, (error, stdout, stderr) => {
         if (error) {
           console.error(`Error executing command: ${error.message}`);
           res.send();
