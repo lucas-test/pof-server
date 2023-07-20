@@ -5,18 +5,21 @@ const fs = require('fs');
 const app = express();
 
 app.get('/', (req, res) => {
-    console.log("Get a request");
+    console.log("Request");
 
     let { title, max } = req.query; 
     console.log(title, max);
     if (max === undefined){
         max = "5";
     }
-    console.log(max);
+    if (title === undefined){
+        console.log("No title");
+        res.send();
+        return;
+    }
 
-       
-
-    exec("./pop8query --title " + title + " --max " + max, (error, stdout, stderr) => {
+    const command = `./pop8query --title ${title} --max ${max}`
+    exec(command, (error, stdout, stderr) => {
         if (error) {
           console.error(`Error executing command: ${error.message}`);
           res.send();
@@ -24,8 +27,6 @@ app.get('/', (req, res) => {
         }
         if (stderr) {
           console.error(`Command error: ${stderr}`);
-          res.send();
-          return;
         }
         
 
@@ -35,12 +36,8 @@ app.get('/', (req, res) => {
 
         // Send the command output as the response
         const data = stdout;
-        console.log(data);
         res.send(data);
-
       });
-
-
 });
 
 // Start the server
