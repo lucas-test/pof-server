@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
         return;
     }
 
-    const command = `./pop8query --title ${title} --max ${max}`
+    const command = `./pop8query --title "${title}" --max ${max}`
     exec(command, (error, stdout, stderr) => {
         if (error) {
           console.error(`Error executing command: ${error.message}`);
