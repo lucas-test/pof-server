@@ -9,18 +9,25 @@ app.use(cors());
 app.get('/', (req, res) => {
     console.log("Request");
 
-    let { title, max } = req.query; 
-    console.log(title, max);
+    let { title, max, yearMin, yearMax } = req.query; 
+    console.log(title, max, yearMin, yearMax);
+    if (yearMin == undefined){
+      yearMin = "1800";
+    }
+    if (yearMax == undefined){
+      yearMax = "2023";
+    }
     if (max === undefined){
         max = "5";
     }
+
     if (title === undefined){
         console.log("No title");
         res.send();
         return;
     }
 
-    const command = `./pop8query --title "${title}" --max ${max}`
+    const command = `./pop8query --title "${title}" --max ${max} --years ${yearMin}-${yearMax}`
     exec(command, (error, stdout, stderr) => {
         if (error) {
           console.error(`Error executing command: ${error.message}`);
